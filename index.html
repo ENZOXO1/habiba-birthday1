@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Happy Birthday Habiba 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root { 
+      --primary-pink: #ff758c; 
+      --glass-bg: rgba(255, 255, 255, 0.25); 
+      --glass-border: rgba(255, 255, 255, 0.4); 
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; height: 100%; }
+    
+    body { 
+      font-family: 'Cairo', sans-serif; 
+      background: linear-gradient(135deg, #ffd6df 0%, #ffc2d1 50%, #ffdce5 100%); 
+      background-attachment: fixed; 
+      min-height: 100vh; 
+      color: #fff; 
+      overflow-x: hidden; 
+      touch-action: manipulation;
+    }
+
+    /* الخلفية المحسنة */
+    .floating-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+    .floating { 
+      position: absolute; 
+      color: rgba(255, 255, 255, 0.6); 
+      font-weight: 800; 
+      animation: smoothRise var(--duration) linear infinite; 
+      will-change: transform, opacity; 
+      white-space: nowrap;
+      user-select: none;
+    }
+    @keyframes smoothRise { 
+      0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; } 
+    }
+
+    section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 2; }
+    
+    .card { 
+      width: 100%; max-width: 500px; 
+      background: var(--glass-bg); 
+      -webkit-backdrop-filter: blur(20px); 
+      backdrop-filter: blur(20px); 
+      border: 1px solid var(--glass-border); 
+      border-radius: 40px; 
+      padding: 40px 25px; 
+      text-align: center; 
+      box-shadow: 0 20px 45px rgba(255, 117, 140, 0.2); 
+      position: relative; 
+      z-index: 3; 
+    }
+
+    /* فيديو درايف المحسن */
+    .video-wrapper { 
+      width: 100%; position: relative; padding-bottom: 177.77%; 
+      height: 0; border-radius: 25px; overflow: hidden; 
+      margin: 20px 0; background: #000; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+    }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* الكتاب */
+    .book-wrapper { margin-top: 30px; perspective: 1500px; display: flex; justify-content: center; }
+    .book { width: 170px; height: 240px; position: relative; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer; }
+    .book.open { transform: rotateY(-180deg); }
+    .book-front, .book-inside { position: absolute; inset: 0; border-radius: 20px; backface-visibility: hidden; }
+    .book-front { background: #fff; overflow: hidden; }
+    .book-front img { width: 100%; height: 100%; object-fit: cover; }
+    .book-inside { background: linear-gradient(45deg, #ff9a9e, #fad0c4); transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; font-weight: 800; }
+
+    /* صندوق الكود */
+    .gift-box { 
+      width: 80px; height: 80px; background: #fff; border-radius: 25px; 
+      display: flex; align-items: center; justify-content: center; 
+      font-size: 35px; margin: 25px auto 0; cursor: pointer; 
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    }
+    .gift-box.active { width: 100%; max-width: 320px; height: 60px; border-radius: 15px; }
+    .gift-input { 
+      display: none; width: 100%; border: none; background: transparent; 
+      outline: none; text-align: center; color: var(--primary-pink); 
+      font-size: 18px; font-weight: 800; font-family: 'Cairo'; 
+    }
+    .gift-box.active .gift-input { display: block; }
+    .gift-box.active .gift-emoji { display: none; }
+
+    /* انفجار الورد السلس (من تحت لفوق) */
+    .mega-flower {
+      position: fixed; bottom: -100px; z-index: 9999; pointer-events: none;
+      animation: megaRise var(--speed) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes megaRise {
+      0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; transform: translateY(-10vh) scale(1.2) rotate(45deg); }
+      100% { transform: translateY(-130vh) scale(1) rotate(720deg); opacity: 0; }
+    }
+
+    /* تأثير اللمس */
+    .tap-effect { 
+      position: fixed; z-index: 9999; pointer-events: none; 
+      animation: tapFlow 1s ease-out forwards; font-size: 30px;
+      will-change: transform, opacity;
+    }
+    @keyframes tapFlow {
+      0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; transform: translate(-50%, -80%) scale(1.3) rotate(20deg); }
+      100% { transform: translate(-50%, -250%) scale(0.8) rotate(-20deg); opacity: 0; }
+    }
+
+    /* النقاط الجانبية */
+    .nav { position: fixed; left: 15px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 15px; }
+    .nav-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid #fff; transition: 0.4s; }
+    .nav-dot.active { background: #fff; transform: scale(1.5); }
+
+    #s4 { display: none; opacity: 0; transform: translateY(50px); transition: all 1s ease; }
+    #s4.visible { display: flex; opacity: 1; transform: translateY(0); }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+  </style>
+</head>
+<body onclick="spawnClickEffect(event)">
+
+  <div class="floating-container" id="floatLayer"></div>
+  
+  <div class="nav" id="mainNav">
+    <div class="nav-dot active" data-sec="s1" onclick="scrollToSec('s1')"></div>
+    <div class="nav-dot" data-sec="s2" onclick="scrollToSec('s2')"></div>
+    <div class="nav-dot" data-sec="s3" onclick="scrollToSec('s3')"></div>
+  </div>
+
+  <section id="s1">
+    <div class="card">
+      <div style="font-size: 2.5rem; font-weight: 800;">حبيبة ✨</div>
+      <h1>كل سنة وأنتِ طيبة</h1>
+      <p>يا أجمل حد في الدنيا 💕</p>
+      <div class="book-wrapper">
+        <div class="book" onclick="event.stopPropagation(); this.classList.toggle('open')">
+          <div class="book-front">
+            <img src="https://i.ibb.co/1JB4xdLm/58e65ce405eec86534fb3ce5dbe32041.jpg" alt="Habiba">
+          </div>
+          <div class="book-inside">
+            <p style="color: white; font-size: 1.2rem;">أحلى 20 سنة في الدنيا! 🎂🎈</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="card">
+      <div style="font-size: 4rem;">🌸✨</div>
+      <h1 style="font-size: 2.2rem;">الجميلة تمت 20</h1>
+      <p style="font-size: 1.1rem; line-height: 1.8;">ضحكتك هي اللي بتحلي الدنيا.. <br> خليكي دايمًا مشرقة زي الورد ✨</p>
+    </div>
+  </section>
+
+  <section id="s3">
+    <div class="card">
+      <div style="font-size: 3.5rem;">🎁</div>
+      <h1>افتحي المفاجأة</h1>
+      <p>اكتبي الكود السري عشان تشوفي الفيديو</p>
+      <div class="gift-box" id="gift" onclick="event.stopPropagation(); this.classList.add('active'); document.getElementById('giftInput').focus();">
+        <span class="gift-emoji">🎁</span>
+        <input type="number" pattern="\d*" inputmode="numeric" class="gift-input" id="giftInput" placeholder="الكود السري هنا..." oninput="checkCode(this)">
+      </div>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="card">
+      <div style="font-size: 2.5rem;">🎬 ذكرى ليكي</div>
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/1NzzNRLBpJRP9v4JGzsGIVokCFKLAiB-z/preview"></iframe>
+      </div>
+      <p style="font-weight: 800;">لأنك شخص غالي جداً.. 🌹</p>
+    </div>
+  </section>
+
+  <script>
+    // 1. توليد الخلفية الغنية (تورتات، هدايا، كلمات)
+    const floatLayer = document.getElementById('floatLayer');
+    const bgItems = [
+      "كل سنة وأنتِ طيبة 💖", "20 سنة ✨", "🎂", "🎁", "🌸", "🌹", "🎈", "🕯️", "🎀", "🍭"
+    ];
+    
+    function createBg() {
+      for (let i = 0; i < 60; i++) {
+        const el = document.createElement('div');
+        el.className = 'floating';
+        el.innerText = bgItems[Math.floor(Math.random() * bgItems.length)];
+        el.style.left = Math.random() * 90 + "vw";
+        el.style.setProperty('--duration', (15 + Math.random() * 15) + "s");
+        el.style.animationDelay = Math.random() * 10 + "s";
+        el.style.fontSize = (16 + Math.random() * 12) + "px";
+        floatLayer.appendChild(el);
+      }
+    }
+    createBg();
+
+    // 2. تفاعل الضغط (ورد، قلوب، هدايا)
+    function spawnClickEffect(e) {
+      const clickEmojis = ["🌹", "🌸", "💖", "✨", "🎁", "🎈"];
+      for(let i=0; i<6; i++) {
+        const p = document.createElement('div');
+        p.className = 'tap-effect';
+        p.innerText = clickEmojis[Math.floor(Math.random() * clickEmojis.length)];
+        p.style.left = e.clientX + "px";
+        p.style.top = e.clientY + "px";
+        // إضافة حركة عشوائية بسيطة لكل إيموجي
+        p.style.marginLeft = (Math.random() * 40 - 20) + "px";
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1000);
+      }
+    }
+
+    // 3. الكود السري وانفجار الورد العملاق (من تحت لفوق)
+    function checkCode(input) {
+      if (input.value === "5797418438") {
+        input.blur();
+        spawnMegaFlowers();
+        
+        const s4 = document.getElementById('s4');
+        s4.style.display = 'flex';
+        setTimeout(() => { 
+          s4.classList.add('visible');
+          if(!document.querySelector('[data-sec="s4"]')) {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot'; dot.dataset.sec = 's4';
+            dot.onclick = () => scrollToSec('s4');
+            document.getElementById('mainNav').appendChild(dot);
+          }
+          scrollToSec('s4');
+        }, 400);
+      } else if (input.value.length >= 10) {
+        document.getElementById('gift').style.animation = "shake 0.5s";
+        setTimeout(() => document.getElementById('gift').style.animation = "", 500);
+        input.value = "";
+      }
+    }
+
+    function spawnMegaFlowers() {
+      const flowers = ["🌹", "🌸", "🌷", "🌺", "💖", "✨", "💐"];
+      // إنتاج 120 زهرة منتشرة بكثافة
+      for (let i = 0; i < 120; i++) {
+        setTimeout(() => {
+          const f = document.createElement('div');
+          f.className = 'mega-flower';
+          f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+          f.style.left = Math.random() * 100 + "vw";
+          f.style.fontSize = (20 + Math.random() * 35) + "px";
+          f.style.setProperty('--speed', (3 + Math.random() * 2) + "s");
+          document.body.appendChild(f);
+          setTimeout(() => f.remove(), 5000);
+        }, i * 15); // تتابع سريع جداً وسلس
+      }
+    }
+
+    function scrollToSec(id) {
+      const target = document.getElementById(id);
+      if(target) window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+    }
+
+    // تحديث النقاط الجانبية عند التمرير
+    window.addEventListener('scroll', () => {
+      const dots = document.querySelectorAll('.nav-dot');
+      const sections = document.querySelectorAll('section');
+      let current = "s1";
+      sections.forEach(s => { 
+        if (window.scrollY >= s.offsetTop - 300) current = s.id; 
+      });
+      dots.forEach(d => d.classList.toggle('active', d.dataset.sec === current));
+    }, { passive: true });
+  </script>
+</body>
+</html>
