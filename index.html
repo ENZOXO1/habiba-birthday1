@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Happy Birthday Habiba 💖</title>
+  <title>Happy Birthday Habiba 🎂</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -23,132 +23,78 @@
       color: #fff;
     }
 
-    /* الخلفية: كلمات وإيموجي تطفو بنعومة وسلاسة */
-    .floating-container {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
+    /* الخلفية: عناصر تطفو بنعومة وثبات[span_2](start_span)[span_2](end_span) */
+    .floating-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
     .floating-item {
-      position: absolute;
-      bottom: -100px;
-      white-space: nowrap;
-      font-weight: 800;
-      opacity: 0.7;
-      animation: smoothFloat var(--duration) linear infinite;
+      position: absolute; bottom: -120px; white-space: nowrap;
+      font-weight: 800; opacity: 0.5; animation: smoothVerticalFloat var(--duration) linear infinite;
       will-change: transform;
     }
-
-    @keyframes smoothFloat {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-120vh) rotate(360deg); }
+    @keyframes smoothVerticalFloat {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-140vh); }
     }
 
-    section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      position: relative;
-      z-index: 2;
-      perspective: 2000px; /* للتدوير */
-    }
+    section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 2; }
 
-    .card {
-      width: 100%;
-      max-width: 450px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 2px solid var(--glass-border);
-      border-radius: 40px;
-      padding: 40px 25px;
-      text-align: center;
+    .card-container { width: 100%; max-width: 450px; height: 550px; perspective: 1500px; position: relative; }
+    .card { width: 100%; height: 100%; position: relative; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+    .card.flipped { transform: rotateY(180deg); }
+
+    .card-front, .card-back {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 2px solid var(--glass-border); border-radius: 40px;
+      padding: 40px 25px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
       box-shadow: 0 20px 45px rgba(255, 117, 140, 0.2);
-      transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      transform-style: preserve-3d;
     }
-
-    /* كلاس التدوير */
-    .card.spin {
-      transform: rotateY(360deg) scale(1.05);
-    }
+    .card-back { transform: rotateY(180deg); background: rgba(255, 255, 255, 0.35); }
 
     .btn-spin {
-      background: #fff;
-      color: var(--primary-pink);
-      border: none;
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-family: 'Cairo';
-      font-weight: 800;
-      font-size: 1.1rem;
-      margin-top: 25px;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(255, 117, 140, 0.3);
-      transition: 0.3s;
+      background: #fff; color: var(--primary-pink); border: none; padding: 12px 30px;
+      border-radius: 50px; font-family: 'Cairo'; font-weight: 800; font-size: 1rem;
+      margin-top: 25px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s;
     }
 
-    .btn-spin:active { transform: scale(0.95); }
+    .book-wrapper { margin: 20px auto; width: 150px; height: 200px; }
+    .book-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 20px; border: 4px solid #fff; }
 
-    .book-wrapper { margin: 25px auto; perspective: 1000px; width: 160px; height: 220px; }
-    .book {
-      width: 100%; height: 100%; position: relative;
-      transform-style: preserve-3d; transition: transform 1s;
-      cursor: pointer;
+    .message-text { color: #444; font-size: 1.3rem; line-height: 2; font-weight: 800; text-align: center; padding: 0 10px; }
+
+    /* انفجار الورد السريع والسلس[span_3](start_span)[span_3](end_span) */
+    .rose-explosion {
+      position: fixed; bottom: -100px; z-index: 9999; pointer-events: none;
+      animation: fastRise var(--speed) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
-    .book.open { transform: rotateY(-140deg); }
-    .book-front, .book-inside {
-      position: absolute; inset: 0; border-radius: 15px;
-      backface-visibility: hidden; box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-    }
-    .book-front { z-index: 2; border: 4px solid #fff; }
-    .book-front img { width: 100%; height: 100%; object-fit: cover; border-radius: 11px; }
-    .book-inside {
-      background: #fff; color: var(--primary-pink);
-      transform: rotateY(180deg); display: flex; align-items: center;
-      justify-content: center; padding: 15px; font-weight: 800; text-align: center;
+    @keyframes fastRise {
+      0% { transform: translateY(0) scale(0.5); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-130vh) scale(1.8) rotate(180deg); opacity: 0; }
     }
 
-    .video-wrapper {
-      width: 100%; position: relative; padding-bottom: 177.77%;
-      height: 0; border-radius: 25px; overflow: hidden;
-      margin: 20px 0; background: #000;
+    /* القائمة الجانبية: صغيرة وناعمة[span_4](start_span)[span_4](end_span) */
+    .nav { position: fixed; left: 12px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+    .nav-dot { 
+      width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); 
+      cursor: pointer; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
     }
-    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .nav-dot.active { background: #fff; height: 22px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.6); }
 
-    .gift-box {
-      width: 80px; height: 80px; background: #fff; border-radius: 20px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 35px; margin: 20px auto 0; cursor: pointer;
-      transition: all 0.5s ease;
+    /* فيديو يوتيوب المطور[span_5](start_span)[span_5](end_span) */
+    .video-wrapper { 
+      width: 100%; position: relative; padding-bottom: 177.77%; height: 0; 
+      border-radius: 25px; overflow: hidden; margin: 20px 0; background: #000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
+    .video-wrapper iframe { 
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; 
+    }
+
+    .gift-box { width: 80px; height: 80px; background: #fff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 35px; margin: 20px auto 0; cursor: pointer; }
     .gift-box.active { width: 100%; height: 60px; }
-    .gift-input {
-      display: none; width: 100%; border: none; background: transparent;
-      outline: none; text-align: center; color: var(--primary-pink);
-      font-size: 18px; font-weight: 800; font-family: 'Cairo';
-    }
+    .gift-input { display: none; width: 100%; border: none; background: transparent; outline: none; text-align: center; color: var(--primary-pink); font-size: 18px; font-weight: 800; font-family: 'Cairo'; }
     .gift-box.active .gift-input { display: block; }
-    .gift-box.active .gift-emoji { display: none; }
-
-    .mega-flower {
-      position: fixed; bottom: -50px; z-index: 9999; pointer-events: none;
-      animation: megaRise var(--speed) ease-out forwards;
-    }
-    @keyframes megaRise {
-      0% { transform: translateY(0) scale(0); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-120vh) scale(1.5) rotate(720deg); opacity: 0; }
-    }
-
-    .nav { position: fixed; left: 15px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 15px; }
-    .nav-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
-    .nav-dot.active { background: #fff; transform: scale(1.3); }
 
     #s4 { display: none; opacity: 0; transition: 1s; }
     #s4.visible { display: flex; opacity: 1; }
@@ -165,101 +111,106 @@
   </div>
 
   <section id="s1">
-    <div class="card" id="mainCard">
-      <h2 style="font-size: 1.4rem;">أجمل بنوتة ✨</h2>
-      <h1 style="font-size: 3rem; font-weight: 800;">حبيبة</h1>
-      <p>كل سنة وأنتِ طيبة يا ست البنات 💖</p>
-      
-      <div class="book-wrapper">
-        <div class="book" onclick="event.stopPropagation(); this.classList.toggle('open')">
-          <div class="book-front">
+    <div class="card-container">
+      <div class="card" id="mainCard">
+        <div class="card-front">
+          <h2 style="font-size: 1.2rem;">لأجدع صديقة ✨</h2>
+          <h1 style="font-size: 2.8rem; font-weight: 800;">حبيبة</h1>
+          <p>كل سنة وأنتِ طيبة وناجحة دايماً 🎂</p>
+          <div class="book-wrapper">
             <img src="https://i.ibb.co/1JB4xdLm/58e65ce405eec86534fb3ce5dbe32041.jpg" alt="Habiba">
           </div>
-          <div class="book-inside">
-            <p>20 سنة من السكر! 🎂🎈</p>
+          <button class="btn-spin" onclick="flipCard()">شوفي الرسالة ✉️</button>
+        </div>
+        <div class="card-back">
+          <h2 style="margin-bottom: 30px; color: var(--primary-pink); font-size: 1.8rem;">تقدير 🤜🤛</h2>
+          <div class="message-text">
+            "سنة جديدة، وطموح جديد.. <br>
+            كل سنة وأنتِ في أحسن حال <br>
+            ومحققة كل أحلامك"
           </div>
+          <button class="btn-spin" onclick="flipCard()">رجوع ↺</button>
         </div>
       </div>
-
-      <button class="btn-spin" onclick="spinMyCard()">دوسي هنا وشوفي السحر ✨</button>
     </div>
   </section>
 
   <section id="s2">
-    <div class="card">
-      <div style="font-size: 4rem;">🌸✨</div>
-      <h1 style="font-size: 2.2rem;">الجميلة تمت 20</h1>
-      <p style="font-size: 1.1rem; line-height: 1.8;">ضحكتك هي اللي بتحلي الدنيا.. <br> خليكي دايمًا مشرقة زي الورد ✨</p>
+    <div class="card-front" style="position: relative; height: auto; max-width: 450px;">
+      <div style="font-size: 4rem;">🚀🏆</div>
+      <h1 style="font-size: 2.2rem;">مشوار الـ 20</h1>
+      <p style="font-size: 1.1rem; line-height: 1.8;">سنة جديدة يعني طموح جديد.. <br> كلي ثقة إنك هتوصلي لكل أحلامك ✨</p>
     </div>
   </section>
 
   <section id="s3">
-    <div class="card">
+    <div class="card-front" style="position: relative; height: auto; max-width: 450px;">
       <div style="font-size: 3.5rem;">🎁</div>
       <h1>افتحي المفاجأة</h1>
       <p>اكتبي الكود السري عشان تشوفي الفيديو</p>
-      <div class="gift-box" id="gift" onclick="event.stopPropagation(); this.classList.add('active'); document.getElementById('giftInput').focus();">
+      <div class="gift-box" id="gift" onclick="this.classList.add('active'); document.getElementById('giftInput').focus();">
         <span class="gift-emoji">🎁</span>
-        <input type="number" pattern="\d*" inputmode="numeric" class="gift-input" id="giftInput" placeholder="الكود السري هنا..." oninput="checkCode(this)">
+        <input type="number" pattern="\d*" inputmode="numeric" class="gift-input" id="giftInput" placeholder="الكود هنا..." oninput="checkCode(this)">
       </div>
     </div>
   </section>
 
   <section id="s4">
-    <div class="card">
+    <div class="card-front" style="position: relative; height: auto; max-width: 450px;">
       <div style="font-size: 2.2rem;">🎬 ذكرى ليكي</div>
       <div class="video-wrapper">
-        <iframe src="https://drive.google.com/file/d/1NzzNRLBpJRP9v4JGzsGIVokCFKLAiB-z/preview"></iframe>
+        <!-- تم تعديل الرابط ليعمل كمشغل Embed ويدعم الشاشة الكاملة[span_6](start_span)[span_6](end_span) -->
+        <iframe src="https://www.youtube.com/embed/g34gq3CGmSI?rel=0&modestbranding=1&controls=1&showinfo=0" 
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen="true"></iframe>
       </div>
-      <p style="font-weight: 800;">لأنك شخص غالي جداً.. 🌹</p>
+      <p style="font-weight: 800;">عقبال الـ 100 سنة يا صديقتي! 🌹</p>
     </div>
   </section>
 
   <script>
-    // 1. نظام العناصر العائمة (إيموجي + كلمات) بتدفق مستمر
     const floatLayer = document.getElementById('floatLayer');
-    const items = [
-      "حبيبة 💖", "كل سنة وأنتِ طيبة ✨", "20 سنة 🎂", "🌹", "🌸", "🎁", "🎈", "🍭", "🎂", "🕯️"
-    ];
+    const items = ["حبيبة 🎂", "20 سنة ✨", "🌹", "كل سنة وأنتِ طيبة 🎂", "🎁", "🚀", "🏆", "🌸", "🎈", "HBD 🎉"];
 
     function createFloatingItems() {
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 65; i++) {
         setTimeout(() => {
           const el = document.createElement('div');
           el.className = 'floating-item';
           el.innerText = items[Math.floor(Math.random() * items.length)];
           el.style.left = Math.random() * 95 + "vw";
-          const duration = 12 + Math.random() * 10;
+          const duration = 15 + Math.random() * 15;
           el.style.setProperty('--duration', duration + "s");
-          el.style.fontSize = (16 + Math.random() * 15) + "px";
+          el.style.fontSize = (13 + Math.random() * 10) + "px";
           floatLayer.appendChild(el);
-          
-          // إزالة العنصر بعد انتهاء الأنيميشن لإبقاء المتصفح خفيف
           setTimeout(() => el.remove(), duration * 1000);
-        }, i * 300);
+        }, i * 250);
       }
     }
-    
-    // تكرار إنشاء العناصر لضمان استمرارية الخلفية
     createFloatingItems();
-    setInterval(createFloatingItems, 20000);
+    setInterval(createFloatingItems, 18000);
 
-    // 2. وظيفة تدوير الكارت
-    function spinMyCard() {
-      const card = document.getElementById('mainCard');
-      card.classList.add('spin');
-      // إزالة الكلاس بعد الانتهاء عشان تقدر تدوس تاني
-      setTimeout(() => card.classList.remove('spin'), 1500);
-      
-      // تأثير ورد خفيف عند التدوير
-      spawnMegaFlowers(15); 
+    function flipCard() { document.getElementById('mainCard').classList.toggle('flipped'); }
+
+    function explodeRoses() {
+      for (let i = 0; i < 130; i++) {
+        setTimeout(() => {
+          const rose = document.createElement('div');
+          rose.className = 'rose-explosion';
+          rose.innerText = "🌹";
+          rose.style.left = Math.random() * 100 + "vw";
+          rose.style.fontSize = (25 + Math.random() * 25) + "px";
+          rose.style.setProperty('--speed', (1.2 + Math.random() * 1.5) + "s");
+          document.body.appendChild(rose);
+          setTimeout(() => rose.remove(), 3000);
+        }, i * 8);
+      }
     }
 
-    // 3. الكود السري وانفجار الورد
     function checkCode(input) {
       if (input.value === "5797418438") {
-        input.blur();
-        spawnMegaFlowers(100);
+        explodeRoses();
         const s4 = document.getElementById('s4');
         s4.style.display = 'flex';
         setTimeout(() => { 
@@ -270,39 +221,18 @@
             dot.onclick = () => scrollToSec('s4');
             document.getElementById('mainNav').appendChild(dot);
           }
-          scrollToSec('s4');
+          scrollToSec('s4'); 
         }, 500);
       }
     }
 
-    function spawnMegaFlowers(count) {
-      const flowers = ["🌹", "🌸", "💖", "✨", "🌷", "🎁"];
-      for (let i = 0; i < count; i++) {
-        setTimeout(() => {
-          const f = document.createElement('div');
-          f.className = 'mega-flower';
-          f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
-          f.style.left = Math.random() * 100 + "vw";
-          f.style.fontSize = (20 + Math.random() * 35) + "px";
-          f.style.setProperty('--speed', (3 + Math.random() * 2) + "s");
-          document.body.appendChild(f);
-          setTimeout(() => f.remove(), 5000);
-        }, i * 15);
-      }
-    }
-
-    function scrollToSec(id) {
-      const target = document.getElementById(id);
-      window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
-    }
+    function scrollToSec(id) { window.scrollTo({ top: document.getElementById(id).offsetTop, behavior: 'smooth' }); }
 
     window.addEventListener('scroll', () => {
       const dots = document.querySelectorAll('.nav-dot');
       const sections = document.querySelectorAll('section');
-      let current = "s1";
-      sections.forEach(s => { 
-        if (window.scrollY >= s.offsetTop - 300) current = s.id; 
-      });
+      let current = "";
+      sections.forEach(s => { if(window.scrollY >= s.offsetTop - 300) current = s.id; });
       dots.forEach(d => d.classList.toggle('active', d.dataset.sec === current));
     });
   </script>
