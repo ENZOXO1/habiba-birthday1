@@ -14,7 +14,6 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
-    /* تحسين السلاسة لـ iOS[span_1](start_span)[span_1](end_span) */
     html { 
       scroll-behavior: smooth; 
       height: 100%; 
@@ -31,15 +30,17 @@
       overflow-x: hidden;
     }
 
-    /* الخلفية العائمة[span_2](start_span)[span_2](end_span) */
+    /* الخلفية العائمة: إيموجي وكلمات */
     .floating-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
     .floating-item {
-      position: absolute; bottom: -120px; white-space: nowrap;
-      font-weight: 800; opacity: 0.5; animation: smoothVerticalFloat var(--duration) linear infinite;
+      position: absolute; bottom: -150px; white-space: nowrap;
+      font-weight: 600; opacity: 0.4; animation: smoothVerticalFloat var(--duration) linear infinite;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      will-change: transform;
     }
     @keyframes smoothVerticalFloat {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-140vh); }
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-150vh) rotate(var(--rot)); }
     }
 
     section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 2; }
@@ -68,7 +69,6 @@
 
     .message-text { color: #444; font-size: 1.3rem; line-height: 2; font-weight: 800; }
 
-    /* القائمة الجانبية المحسنة لـ iOS[span_3](start_span)[span_3](end_span) */
     .nav { position: fixed; left: 15px; top: 50%; transform: translateY(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
     .nav-dot { 
       width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); 
@@ -76,17 +76,29 @@
     }
     .nav-dot.active { background: #fff; height: 25px; border-radius: 10px; box-shadow: 0 0 15px rgba(255,255,255,0.8); }
 
-    /* تأثير اللمس (القلوب والورد)[span_4](start_span)[span_4](end_span) */
-    .click-effect {
-      position: fixed; pointer-events: none; z-index: 9999;
-      font-size: 24px; animation: effectFloat 1s ease-out forwards;
+    /* تأثير الورد المنفجر السلس */
+    .rose-particle {
+      position: fixed; bottom: -50px; pointer-events: none; z-index: 9999;
+      font-size: 30px; animation: roseExplode 2.5s cubic-bezier(0.1, 0.5, 0.2, 1) forwards;
+      will-change: transform, opacity;
     }
-    @keyframes effectFloat {
-      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-      100% { transform: translate(-50%, -150px) scale(1.5) rotate(20deg); opacity: 0; }
+    @keyframes roseExplode {
+      0% { transform: translate(0, 0) scale(0) rotate(0deg); opacity: 0; }
+      15% { opacity: 1; transform: scale(1.2); }
+      100% { transform: translate(var(--target-x), -120vh) scale(1) rotate(var(--target-deg)); opacity: 0; }
     }
 
-    /* فيديو يوتيوب[span_5](start_span)[span_5](end_span) */
+    .touch-emoji {
+      position: fixed; pointer-events: none; z-index: 9999; font-size: 28px;
+      animation: emojiFloatUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes emojiFloatUp {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+      20% { transform: translate(-50%, -80%) scale(1.2); opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--random-x)), -200px) scale(1) rotate(var(--random-deg)); opacity: 0; }
+    }
+
     .video-wrapper { 
       width: 100%; position: relative; padding-bottom: 177.77%; height: 0; 
       border-radius: 25px; overflow: hidden; margin: 20px 0; background: #000;
@@ -102,7 +114,7 @@
     #s4.visible { display: flex; opacity: 1; }
   </style>
 </head>
-<body onclick="createClickEffect(event)">
+<body onclick="spawnEmoji(event)">
 
   <div class="floating-container" id="floatLayer"></div>
 
@@ -170,35 +182,60 @@
   </section>
 
   <script>
-    // تأثير النقر (قلوب وورد)[span_6](start_span)[span_6](end_span)
-    const emojis = ["❤️", "💖", "🌹", "🌸", "✨", "🎈"];
-    function createClickEffect(e) {
-      const el = document.createElement('div');
-      el.className = 'click-effect';
-      el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-      el.style.left = e.clientX + 'px';
-      el.style.top = e.clientY + 'px';
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 1000);
+    // وظيفة انفجار الورد
+    function roseExplosion() {
+      for(let i=0; i<100; i++) {
+        setTimeout(() => {
+          const rose = document.createElement('div');
+          rose.className = 'rose-particle';
+          rose.innerText = '🌹';
+          rose.style.left = Math.random() * 100 + 'vw';
+          rose.style.setProperty('--target-x', (Math.random() * 400 - 200) + 'px');
+          rose.style.setProperty('--target-deg', (Math.random() * 720 - 360) + 'deg');
+          document.body.appendChild(rose);
+          setTimeout(() => rose.remove(), 2500);
+        }, i * 20);
+      }
     }
 
-    const floatLayer = document.getElementById('floatLayer');
-    const items = ["حبيبة 🎂", "20 سنة ✨", "🌹", "كل سنة وأنتِ طيبة 🎂", "🎁", "🚀", "🏆"];
+    // وظيفة الإيموجي عند اللمس
+    function spawnEmoji(e) {
+      const emojiList = ["❤️", "💖", "🌸", "✨", "🎈", "🌹"];
+      const el = document.createElement('div');
+      el.className = 'touch-emoji';
+      el.innerText = emojiList[Math.floor(Math.random() * emojiList.length)];
+      el.style.left = e.clientX + 'px'; el.style.top = e.clientY + 'px';
+      const randomX = (Math.random() * 100 - 50) + 'px';
+      const randomDeg = (Math.random() * 60 - 30) + 'deg';
+      el.style.setProperty('--random-x', randomX);
+      el.style.setProperty('--random-deg', randomDeg);
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1200);
+    }
 
+    // إنشاء الخلفية العائمة المحدثة
+    const floatItemsList = ["🎂", "🎁", "🌹", "🌸", "كل سنة وأنتِ طيبة", "✨", "💖", "حبيبة ✨"];
     function createFloatingItems() {
-      for (let i = 0; i < 40; i++) {
+      const floatLayer = document.getElementById('floatLayer');
+      for (let i = 0; i < 45; i++) {
         setTimeout(() => {
           const el = document.createElement('div');
           el.className = 'floating-item';
-          el.innerText = items[Math.floor(Math.random() * items.length)];
-          el.style.left = Math.random() * 95 + "vw";
-          const duration = 15 + Math.random() * 10;
+          el.innerText = floatItemsList[Math.floor(Math.random() * floatItemsList.length)];
+          el.style.left = Math.random() * 100 + "vw";
+          const duration = 12 + Math.random() * 15;
           el.style.setProperty('--duration', duration + "s");
-          el.style.fontSize = (14 + Math.random() * 10) + "px";
+          el.style.setProperty('--rot', (Math.random() * 360) + "deg");
+          el.style.fontSize = (16 + Math.random() * 12) + "px";
+          // تباين بسيط في الألوان للكلمات
+          if(el.innerText.length > 2) el.style.color = "rgba(255,255,255,0.6)";
+          
           floatLayer.appendChild(el);
           setTimeout(() => el.remove(), duration * 1000);
-        }, i * 300);
+        }, i * 400);
       }
+      // إعادة التوليد كل فترة للحفاظ على الشكل
+      setTimeout(createFloatingItems, 20000);
     }
     createFloatingItems();
 
@@ -206,6 +243,7 @@
 
     function checkCode(input) {
       if (input.value === "5797418438") {
+        roseExplosion();
         const s4 = document.getElementById('s4');
         s4.style.display = 'flex';
         setTimeout(() => { 
@@ -221,13 +259,9 @@
       }
     }
 
-    // تحسين التنقل السلس لـ iOS[span_7](start_span)[span_7](end_span)
     function scrollToSec(id) {
       const target = document.getElementById(id);
-      window.scrollTo({
-        top: target.offsetTop,
-        behavior: 'smooth'
-      });
+      if(target) window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
     }
 
     window.addEventListener('scroll', () => {
@@ -235,7 +269,9 @@
       const sections = document.querySelectorAll('section');
       let current = "";
       sections.forEach(s => {
-        if(window.pageYOffset >= s.offsetTop - 100) current = s.id;
+        if(getComputedStyle(s).display !== 'none') {
+          if(window.pageYOffset >= s.offsetTop - (window.innerHeight / 2)) current = s.id;
+        }
       });
       dots.forEach(d => d.classList.toggle('active', d.dataset.sec === current));
     }, { passive: true });
